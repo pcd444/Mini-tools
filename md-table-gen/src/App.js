@@ -2,9 +2,11 @@ import React,{useState} from 'react';
 import { AddColAfter, AddColBefore, DeleteRow, AddRowAfter,AddRowBefore, DeleteCol } from './TableFunctions';
 import './App.css';
 
-function App() {
+import {useHistory} from './useHistory'
 
-  const [rows, setRows] = useState([['a', 'b'],['c', 'd']]);
+function App() {
+  console.log('here')
+  const [rows, setRows, undoHistory, redoHistory] = useHistory([['a', 'b'],['c', 'd']]);
   const colcount = rows[0].length;
   const rowcount = rows.length;
   function createTextEditCallback(row){
@@ -60,6 +62,8 @@ function App() {
 
   return (
     <div className="App">
+      <button onClick={undoHistory}>undo</button>
+      <button onClick={redoHistory}>redo</button>
       <button onClick={e=>{navigator.clipboard.writeText(ArrayTableToMD(rows))}}>Copy MD to clipboard</button>
       <table>
         <tbody>
