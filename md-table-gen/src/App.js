@@ -4,20 +4,31 @@ import './App.css';
 
 import {useHistory} from './useHistory'
 
+// Here are the action types
+const START = 'START';
+const WILDCARD = "WILDCARD";
+const WRITETEXT = 'WRITETEXT';
+const WRITETEXTWHITESPACE = "WRITETEXTWHITESPACE";
+const DELETETEXT = "DELETETEXT";
+const ADDROW = 'ADDROW';
+const ADDCOL = 'ADDCOL';
+const REMOVEROW = 'REMOVEROW';
+const REMOVECOL = 'REMOVECOL';
+
 function App() {
-  console.log('here')
   const [rows, setRows, undoHistory, redoHistory] = useHistory([['a', 'b'],['c', 'd']]);
+  const [prevAction, setPrevAction] = useState(START);
   const colcount = rows[0].length;
   const rowcount = rows.length;
   function createTextEditCallback(row){
     return function (col){
       return(function(e){
-      console.log(row,col,e);
-      setRows(prev=>{
-        prev = structuredClone(prev)
-        prev[row][col] = e.target.value;
-        return prev;
-      })
+        console.log(e);
+        setRows(prev=>{
+          prev = structuredClone(prev)
+          prev[row][col] = e.target.value;
+          return prev;
+        }, false)
     })
     }
   }
